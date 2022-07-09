@@ -37,14 +37,7 @@ testRouter.get("/test/jwt", (ctx, next) => {
   }
 });
 
-const fs = require("fs");
-const path = require("path");
-const PRIVATE_KEY = fs.readFileSync(
-  path.resolve(__dirname, "../../keys/private.key")
-);
-const PUBLIC_KEY = fs.readFileSync(
-  path.resolve(__dirname, "../../keys/public.key")
-);
+const { PRIVATE_KEY, PUBLIC_KEY } = require("../app/config");
 
 // 颁发 token 公钥私钥
 testRouter.get("/jwt2", (ctx, next) => {

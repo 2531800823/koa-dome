@@ -1,4 +1,8 @@
-const { insert, getMomentById } = require("../service/moment.service");
+const {
+  insert,
+  getMomentById,
+  getMomentList,
+} = require("../service/moment.service");
 
 class MomentController {
   // 插入动态
@@ -19,7 +23,15 @@ class MomentController {
 
     // 查询 id 的这条数据
     const result = await getMomentById(momentId);
-    console.log(result);
+    ctx.body = result;
+  }
+  async list(ctx, next) {
+    const { offset = 10, size = 10 } = ctx.request.query;
+
+    // 查询列表
+
+    const result = await getMomentList(offset, size);
+
     ctx.body = result;
   }
 }

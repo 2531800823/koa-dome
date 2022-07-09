@@ -11,21 +11,45 @@ class MomemtSercive {
     return result;
   }
 
+  // 查询单个数据
   async getMomentById(id) {
-    const statement = `SELECT 
-    m.id id , 
+    const statement = `SELECT
+    m.id id ,
     m.content content,
     m.updateAt updateAt,
     m.createAt createAt,
     JSON_OBJECT('id',u.id,'name',u.name) as user
-    FROM moment m 
-    left join 
-    users u 
-    on 
-    m.id = u.id
+    FROM moment m
+    left join
+    users u
+    on
+    m.user_id = u.id
      WHERE m.id = ?;`;
+
     const [result] = await connection.execute(statement, [id]);
     return result;
+  }
+
+  // 查询多个数据
+  async getMomentList(offset, size) {
+    const statement = `SELECT
+    m.id id ,
+    m.content content,
+    m.updateAt updateAt,
+    m.createAt createAt,
+    JSON_OBJECT('id',u.id,'name',u.name) as user
+    FROM moment m
+    left join
+    users u
+    on
+    m.user_id = u.id
+    limit ?,?;`;
+    try {
+      const [result] = await connection.execute(statement, [offset, size]);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

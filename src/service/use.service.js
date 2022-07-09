@@ -13,7 +13,7 @@ class UserSercive {
 
   // 查看用户名是否存在
   async getUserByName(name) {
-    const statement = `SELECT name,password FROM users WHERE name = ?;`;
+    const statement = `SELECT * FROM users WHERE name = ?;`;
     const result = await connection.execute(statement, [name]);
     return result;
   }

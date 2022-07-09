@@ -34,12 +34,12 @@ const verifyAuth = async (ctx, next) => {
   console.log("验证授权的 middleware~!");
 
   const authorization = ctx.headers.authorization;
-  const token = authorization.replace("Bearer ", "");
+  const token = authorization?.replace("Bearer ", "");
   try {
     const result = jwt.verify(token, PUBLIC_KEY, {
       algorithms: ["RS256"],
     });
-    console.log(result);
+    ctx.user = result;
     await next();
   } catch (err) {
     const error = new Error(errorType.AUTH_IS_FALSE);

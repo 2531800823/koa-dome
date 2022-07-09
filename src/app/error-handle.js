@@ -16,6 +16,9 @@ const errorHandler = (error, ctx) => {
     case errorType.PASSWORD_IS_FALSE:
       (status = 400), (message = "密码错误~");
       break;
+    case errorType.AUTH_IS_FALSE:
+      (status = 401), (message = "请重新登录账号~");
+      break;
     default:
       (status = 404), (message = "NOT FOUND");
       break;

@@ -1,6 +1,8 @@
 const service = require("../service/use.service");
 const errorType = require("../constants/error-types");
+const jwt = require("jsonwebtoken");
 const { md5password } = require("../utils/password-handle");
+const { PUBLIC_KEY } = require("../app/config");
 
 const verifyLogin = async (ctx, next) => {
   const { name, password } = ctx.request.body;
@@ -28,6 +30,24 @@ const verifyLogin = async (ctx, next) => {
   await next();
 };
 
+const verifyAuth = async (ctx, next) => {
+  console.log("验证授权的 middleware~!");
+
+  const authorization = ctx.headers.authorization;
+  const token = authorization.replace("Bearer ", "");
+  try {
+    const result = jwt.verify(token, PUBLIC_KEY, {
+      algorithms: ["RS256"],
+    });
+    console.log(result);
+    await next();
+  } catch (err) {
+    const error = new Error(errorType.AUTH_IS_FALSE);
+    return ctx.app.emit("error", error, ctx);
+  }
+};
+
 module.exports = {
   verifyLogin,
+  verifyAuth,
 };

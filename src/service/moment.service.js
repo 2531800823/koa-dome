@@ -10,6 +10,23 @@ class MomemtSercive {
     const [result] = await connection.execute(statement, [context, userId]);
     return result;
   }
+
+  async getMomentById(id) {
+    const statement = `SELECT 
+    m.id id , 
+    m.content content,
+    m.updateAt updateAt,
+    m.createAt createAt,
+    JSON_OBJECT('id',u.id,'name',u.name) as user
+    FROM moment m 
+    left join 
+    users u 
+    on 
+    m.id = u.id
+     WHERE m.id = ?;`;
+    const [result] = await connection.execute(statement, [id]);
+    return result;
+  }
 }
 
 module.exports = new MomemtSercive();

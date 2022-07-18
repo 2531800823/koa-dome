@@ -5,6 +5,7 @@ const USER_IS_FALSE = "user_is_false";
 const PASSWORD_IS_FALSE = "password_is_false";
 
 const AUTH_IS_FALSE = "auth_is_false";
+const MOMENT_ID_IS_FALSE = "moment_id_is_false";
 
 module.exports = {
   NAME_OR_PASSWORD_IS_REQUIRED,
@@ -12,4 +13,5 @@ module.exports = {
   USER_IS_FALSE,
   PASSWORD_IS_FALSE,
   AUTH_IS_FALSE,
+  MOMENT_ID_IS_FALSE,
 };

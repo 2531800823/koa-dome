@@ -19,6 +19,9 @@ const errorHandler = (error, ctx) => {
     case errorType.AUTH_IS_FALSE:
       (status = 401), (message = "无效的token~");
       break;
+    case errorType.MOMENT_ID_IS_FALSE:
+      (status = 401), (message = "不具备操作权限~");
+      break;
     default:
       (status = 404), (message = "NOT FOUND");
       break;

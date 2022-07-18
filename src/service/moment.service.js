@@ -51,6 +51,13 @@ class MomemtSercive {
       console.log(error);
     }
   }
+
+  // 修改文档内容
+  async update(content, momentId) {
+    const statement = ` update moment set content = ? where id = ?;`;
+    const [result] = await connection.execute(statement, [content, momentId]);
+    return result;
+  }
 }
 
 module.exports = new MomemtSercive();

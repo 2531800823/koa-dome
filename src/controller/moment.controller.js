@@ -2,6 +2,7 @@ const {
   insert,
   getMomentById,
   getMomentList,
+  update,
 } = require("../service/moment.service");
 
 class MomentController {
@@ -33,6 +34,16 @@ class MomentController {
     const result = await getMomentList(offset, size);
 
     ctx.body = result;
+  }
+  async update(ctx, next) {
+    const { momentId } = ctx.params;
+    const { context } = ctx.request.body;
+    const { id } = ctx.user;
+
+    // 修改内容
+    const result = await update(context, momentId);
+    console.log(result);
+    ctx.body = "修改内容~" + momentId + context + id;
   }
 }
 

@@ -1,4 +1,5 @@
 const service = require("../service/use.service");
+const authService = require("../service/auth.service");
 const errorType = require("../constants/error-types");
 const jwt = require("jsonwebtoken");
 const { md5password } = require("../utils/password-handle");
@@ -42,12 +43,31 @@ const verifyAuth = async (ctx, next) => {
     ctx.user = result;
     await next();
   } catch (err) {
+    console.log(err);
     const error = new Error(errorType.AUTH_IS_FALSE);
     return ctx.app.emit("error", error, ctx);
   }
 };
 
+const verifyPermission = async (ctx, next) => {
+  // 查数据库
+  console.log("验证权限的middleware~");
+
+  const { id } = ctx.user;
+  const { momentId } = ctx.params;
+
+  // 查询是否具备权限
+  const isPermission = await authService.checkMoment(momentId, id);
+  if (!isPermission) {
+    const error = new Error(errorType.MOMENT_ID_IS_FALSE);
+    return ctx.app.emit("error", error, ctx);
+  }
+
+  await next();
+};
+
 module.exports = {
   verifyLogin,
   verifyAuth,
+  verifyPermission,
 };

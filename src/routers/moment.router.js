@@ -1,7 +1,7 @@
 const Router = require("koa-router");
 const {
   verifyAuth,
-  verifyPermission,
+  verifyPermissionComment,
 } = require("../middleware/auth.middleware");
 
 const {
@@ -19,7 +19,17 @@ momentRouter.get("/", list);
 
 momentRouter.get("/:momentId", detail);
 // 用户登录，有权限
-momentRouter.post("/:momentId", verifyAuth, verifyPermission, update); // 修改文章内容
-momentRouter.delete("/:momentId", verifyAuth, verifyPermission, remove); // 删除文章
+momentRouter.post(
+  "/:momentId",
+  verifyAuth,
+  verifyPermissionComment("moment"),
+  update
+); // 修改文章内容
+momentRouter.delete(
+  "/:momentId",
+  verifyAuth,
+  verifyPermissionComment("moment"),
+  remove
+); // 删除文章
 
 module.exports = momentRouter;

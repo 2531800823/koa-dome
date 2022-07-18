@@ -16,6 +16,16 @@ class CommentController {
 
     ctx.body = result;
   }
+
+  async update(ctx, next) {
+    const { commentId } = ctx.params;
+    const { content } = ctx.request.body;
+    const { id } = ctx.user;
+    console.log(commentId);
+    const result = await service.update(content, commentId, id);
+    // console.log(result);
+    ctx.body = "xiugaichengg";
+  }
 }
 
 module.exports = new CommentController();

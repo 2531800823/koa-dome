@@ -49,6 +49,7 @@ const verifyAuth = async (ctx, next) => {
   }
 };
 
+// 每个要写一遍 验证有无权限，用下面的方法，直接 可以多个
 const verifyPermission = async (ctx, next) => {
   // 查数据库
   console.log("验证权限的middleware~");
@@ -66,8 +67,29 @@ const verifyPermission = async (ctx, next) => {
   await next();
 };
 
+const verifyPermissionComment = (tableName) => async (ctx, next) => {
+  // 查数据库
+  console.log("验证权限的middleware~");
+
+  const { id } = ctx.user;
+  const res = ctx.params;
+
+  // 查询是否具备权限
+  const isPermission = await authService.checkTable(
+    tableName,
+    res[tableName + "Id"],
+    id
+  );
+  if (!isPermission) {
+    const error = new Error(errorType.MOMENT_ID_IS_FALSE);
+    return ctx.app.emit("error", error, ctx);
+  }
+
+  await next();
+};
+
 module.exports = {
   verifyLogin,
   verifyAuth,
-  verifyPermission,
+  verifyPermissionComment,
 };

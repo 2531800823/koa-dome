@@ -58,6 +58,13 @@ class MomemtSercive {
     const [result] = await connection.execute(statement, [content, momentId]);
     return result;
   }
+
+  // 删除文档内容
+  async remove(momentId) {
+    const statement = `DELETE FROM moment WHERE id = ?;`;
+    const [result] = await connection.execute(statement, [momentId]);
+    return result;
+  }
 }
 
 module.exports = new MomemtSercive();

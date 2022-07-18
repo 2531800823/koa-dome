@@ -3,6 +3,7 @@ const {
   getMomentById,
   getMomentList,
   update,
+  remove,
 } = require("../service/moment.service");
 
 class MomentController {
@@ -44,6 +45,11 @@ class MomentController {
     const result = await update(context, momentId);
     console.log(result);
     ctx.body = "修改内容~" + momentId + context + id;
+  }
+  async remove(ctx, next) {
+    const { momentId } = ctx.params;
+    const result = await remove(momentId);
+    ctx.body = result;
   }
 }
 

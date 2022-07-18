@@ -8,6 +8,14 @@ class CommentController {
 
     ctx.body = result;
   }
+
+  async reply(ctx, next) {
+    const { momentId, content, commentId } = ctx.request.body;
+    const { id } = ctx.user;
+    const result = await service.reply(momentId, content, id, commentId);
+
+    ctx.body = result;
+  }
 }
 
 module.exports = new CommentController();

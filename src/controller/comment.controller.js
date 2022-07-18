@@ -24,7 +24,14 @@ class CommentController {
     console.log(commentId);
     const result = await service.update(content, commentId, id);
     // console.log(result);
-    ctx.body = "xiugaichengg";
+    ctx.body = "修改评论成功~";
+  }
+
+  async remove(ctx, next) {
+    const { commentId } = ctx.params;
+    const result = await service.remove(commentId);
+    // console.log(result);
+    ctx.body = result;
   }
 }
 

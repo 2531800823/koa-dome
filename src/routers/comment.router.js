@@ -1,5 +1,10 @@
 const Router = require("koa-router");
-const { create, reply, update } = require("../controller/comment.controller");
+const {
+  create,
+  reply,
+  update,
+  remove,
+} = require("../controller/comment.controller");
 const {
   verifyAuth,
   verifyPermissionComment,
@@ -18,12 +23,13 @@ commentRouter.patch(
   verifyPermissionComment("comment"),
   update
 );
+
 // 删除评论
 commentRouter.delete(
   "/:commentId",
   verifyAuth,
   verifyPermissionComment("comment"),
-  reply
+  remove
 );
 
 module.exports = commentRouter;
